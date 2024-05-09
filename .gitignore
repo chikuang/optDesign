@@ -1,5 +1,5 @@
 # macbook temp file
-*.DS_Store
+**/.DS_Store
 
 # HTML file
 *.html

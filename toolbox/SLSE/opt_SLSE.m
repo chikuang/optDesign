@@ -1,11 +1,11 @@
-% [a,b,c] = A_opt_SLSE(101, 0, [0.05, 0.5]', [0,180]',@peleg)
+% [opt_val, opt_design, error] = opt_SLSE("D", 101, 0, [0.05, 0.5]', [0,180]',@peleg)
 %% Author: Chi-Kuang Yeh
 % May 19 / 2017
 % A optimality criterion
 % Optimal designs for regression models using 2nd order LSE
 
 %% function itself
-function [del, ANS, error] = under_working(criterion, N, t, theta, range, fun)
+function [del, ANS, error] = opt_SLSE(criterion, N, t, theta, range, fun)
   %% initialization
   u = linspace(range(1), range(2), N); %discretized equally spaced space
   w = zeros(N, 1); n = length(theta); del = 0;

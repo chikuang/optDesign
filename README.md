@@ -97,6 +97,9 @@ opt_design =
 error =
    1.1299e-10
 ```
+<img src="resource/fig/README-fig-SLSE1.fig" width="50%" />
+
+<img src="resource/fig/README-fig-SLSE2.fig" width="50%" />
 
 ## TODO
 

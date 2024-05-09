@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="/Users/chikuang/Library/CloudStorage/Dropbox/GitHub_mac/optDesign/optDesign.prj" location="/Users/chikuang/Library/CloudStorage/Dropbox/GitHub_mac/optDesign" name="optDesign" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2966604628" file="/Users/chikuang/Library/CloudStorage/Dropbox/GitHub_mac/optDesign/optDesign.prj" location="/Users/chikuang/Library/CloudStorage/Dropbox/GitHub_mac/optDesign" name="optDesign" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>optDesign</param.appname>
     <param.authnamewatermark>Chi-Kuang Yeh, Julie Zhou</param.authnamewatermark>
     <param.email>chi-kuang.yeh@uwaterloo.ca</param.email>

@@ -5,13 +5,15 @@
 % Optimal designs for regression models using 2nd order LSE
 
 %% function itself
-function [del, ANS, error] = opt_SLSE(criterion, N, t, theta, range, fun)
+function [del, ANS, error] = under_working(criterion, N, t, theta, range, fun)
   %% initialization
   u = linspace(range(1), range(2), N); %discretized equally spaced space
   w = zeros(N, 1); n = length(theta); del = 0;
 
-  if criterion == 'c'
+  if criterion == 'A'
     C = [zeros(n, 1) eye(n)]'; % each column is a ci which we used later
+  elseif criterion == "c"
+    C =  [0, c];
   end
   
   g1 = zeros(n, 1); G2 = zeros(n); obj_val = 0; one_vec = ones(N, 1); zero_vec = zeros(N, 1);
@@ -31,9 +33,16 @@ function [del, ANS, error] = opt_SLSE(criterion, N, t, theta, range, fun)
 
   B = [1, sqrt(t) * g1'; sqrt(t) * g1, G2];
   % three constains
+
+ if criterion == "A"
   for k = 1:n
     obj_val = obj_val + matrix_frac(C(:, k), B);
   end
+ elseif criterion == "c"
+   obj_val = matrix_frac(C', B);
+ elseif criterion == "D"
+   obj_val = -log_det(B);
+ end
 
   % the three constrains
   obj_val <= del;
@@ -49,18 +58,36 @@ function [del, ANS, error] = opt_SLSE(criterion, N, t, theta, range, fun)
   %% checking condition, from M-A
   % prepare the variables
   BI = inv(B);
-  phi_A = zeros(N, 1);
-  C = blkdiag(0, eye(n));
+  phi = zeros(N, 1);
 
+  if criterion == "A"
+    C = blkdiag(0, eye(n));
+  elseif criterion == "c"
+    C = [0, c];
+  end
   for i = 1:N
     f = fun(u(i), theta);
     I = [1 sqrt(t) * f'; sqrt(t) * f f * f'];
-    phi_A(i) = trace(I * BI * C' * C * BI);
+    if criterion == "A" | criterion == "c"
+      phi(i) = trace(I * BI * C' * C * BI);
+    elseif criterion == "D"
+      phi(i) = trace(B \ I);
+    end
   end
 
   % update the error
-  trac = trace(C * BI * C');
-  error = max(phi_A - trac);
+  if criterion == "A"
+    term = trace(C * BI * C');
+    error = max(phi - term);
+  elseif criterion == "c"
+     term = C * BI * C';
+     error = max(phi - term);
+  elseif criterion == "D"
+    q = (n + 1) * ones(N, 1);
+    term = q;
+    error = max(phi - q);
+  end
+  
   %% plots
   % first, we increase the graphing domain
   new_range = [0; 0]; add_dist = (range(2) - range(1)) / 20;
@@ -77,12 +104,18 @@ function [del, ANS, error] = opt_SLSE(criterion, N, t, theta, range, fun)
   title('Discretized weight distribution', 'FontSize', 20)
 
   %directional derivative plot
-  fx = @(x) fun(x, theta);
-  ff = @(x) trace([1 sqrt(t) * fx(x)'; sqrt(t) * fx(x) fx(x) * fx(x)'] * BI * C' * C * BI) - trac;
-
-  mini = min(phi_A - trac * ones(N, 1));
+   fx = @(x) fun(x, theta);
+  if criterion == "A"
+    ff = @(x) trace([1 sqrt(t) * fx(x)'; sqrt(t) * fx(x) fx(x) * fx(x)'] * BI * C' * C * BI) - term;
+  elseif criterion == "c"
+      ff = @(x) trace([1 sqrt(t) * fx(x)'; sqrt(t) * fx(x) fx(x) * fx(x)'] * BI * C' * C * ...
+    BI) - term;
+  elseif criterion == "D"
+    ff = @(x) trace(B \ [1 sqrt(t) * fx(x)'; sqrt(t)* fx(x) fx(x) * fx(x)']) - (n + 1);
+  end
+  mini = min(phi - term * 1);
   figure
-  h1 = plot(u, phi_A - trac * ones(N, 1), '+'); %discretized
+  h1 = plot(u, phi - term * 1, '+'); %discretized
   xlim(new_range);
   ylim([mini + mini / 10, 1]);
   hold on

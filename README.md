@@ -53,7 +53,7 @@ The information matrix of a design $\xi(\mathbf{x})\in \Xi_S$ for model on top i
 \boldsymbol{\mathrm{I}}(\xi, \mathbf{\theta}^*) =\sum_{i=1}^k w_i \boldsymbol{\mathrm{f}}({\bf v}_i, \mathbf{\theta}^*)\boldsymbol{\mathrm{f}}^\top({\bf v}_i, \mathbf{\theta}^*),
 ```
 where vector $`\boldsymbol{\mathrm{f}}(\mathbf{x}, \mathbf{\theta}) =\frac{\partial \eta(\mathbf{x}, \mathbf{\theta})}
-{\partial  \mathbf{\theta}}`$, and $`\mathbf{\theta}^*$` is the true value of $`\mathbf{\theta}`$. The covariance matrix of $`\hat{\mathbf{\theta}}`$, $`\mathbb{c}ov(\hat{\mathbf{\theta}})`$, is proportional to $`\\boldsymbol{\mathrm{I}}^{-1}(\xi, \mathbf{\theta}^*)`$. An OAD is defined as the minimizer of  $`\phi\left\{  \boldsymbol{\mathrm{I}}^{-1}(\xi, \mathbf{\theta}^*)\right\}`$ over all possible designs  $`\xi \in \Xi_S`$ for a given function $`\phi(\cdot)`$. 
+{\partial  \mathbf{\theta}}`$, and $`\mathbf{\theta}^*$` is the true value of $`\mathbf{\theta}`$. The covariance matrix of $`\hat{\mathbf{\theta}}`$, $`\mathbb{c}ov(\hat{\mathbf{\theta}})`$, is proportional to $`\boldsymbol{\mathrm{I}}^{-1}(\xi, \mathbf{\theta}^*)`$. An OAD is defined as the minimizer of  $`\phi\left\{  \boldsymbol{\mathrm{I}}^{-1}(\xi, \mathbf{\theta}^*)\right\}`$ over all possible designs  $`\xi \in \Xi_S`$ for a given function $`\phi(\cdot)`$. 
 
 ```
 [optval, opt_design] = opt_OLS("D", 1001, [0, 4], [1,1]', @mm)
@@ -71,17 +71,17 @@ opt_design =
 
 ##### Example 2. Optimal approximate design under second least-squares estimator
 
-We now review some properties of the SLSE in the regression model (\ref{Simple Regression}). SLSE is defined as
+Second order least-squares estimator is defined as
 ```math
-(\boldsymbol{\hat{\theta}}^T,\hat{\sigma}^2)^\top:=\underset{\boldsymbol{\theta},\sigma^2}{\mathrm{argmin}}\sum_{i=1}^n \begin{pmatrix}
-y_i-g(\boldsymbol{x}_i;\boldsymbol{\theta})\\
-y_i^2-g^2(\boldsymbol{x}_i;\boldsymbol{\theta})-\sigma^2
+(\boldsymbol{\hat{\theta}}^\top,\hat{\sigma}^2)^\top:=\underset{\boldsymbol{\theta},\sigma^2}{\mathrm{argmin}}\sum_{i=1}^n \begin{pmatrix}
+y_i-\eta(\boldsymbol{x}_i;\boldsymbol{\theta})\\
+y_i^2-\eta^2(\boldsymbol{x}_i;\boldsymbol{\theta})-\sigma^2
 \end{pmatrix}^\top W(\boldsymbol{x_i}) \begin{pmatrix}
-y_i-g(\boldsymbol{x_i};\boldsymbol{\theta})\\
-y_i^2-g^2(\boldsymbol{x_i};\boldsymbol{\theta})-\sigma^2
+y_i-\eta(\boldsymbol{x_i};\boldsymbol{\theta})\\
+y_i^2-\eta^2(\boldsymbol{x_i};\boldsymbol{\theta})-\sigma^2
 \end{pmatrix}.
 ```
-Note that $`W(\boldsymbol{x_i})`$ is a $`2\times 2`$ non-negative semi-definite matrix which may or may not depend on $\boldsymbol{x_i}$ \Wang and Leblanc (2008). It is clear that SLSE is a natural extension of the OLSE which is defined based on the first-order difference function (i.e. $`y_i-\mathbb{E}[y_i]=y_i-g(\boldsymbol{x_i};\boldsymbol{\theta})`$). On the other hand, SLSE is defined using not only the first-order difference function, but also second-order difference function (i.e. $`y_i^2-\mathbb{E}[y_i^2]=y_i^2-(g^2(\boldsymbol{x_i};\boldsymbol{\theta})+\sigma^2))`$. One might think about the downsides of the SLSE after talking about the advantages of SLSE over OLSE. SLSE does have its disadvantages indeed. It is not a linear estimator and there is no closed-form solution. It requires more computational resources compared to the OLSE due to the nonlinearity. However, numerical results can be easily computed for SLSE nowadays. As a result, SLSE is a powerful alternative estimator to be considered in research studies and real-life applications.
+Note that $`W(\boldsymbol{x_i})`$ is a $`2\times 2`$ non-negative semi-definite matrix which may or may not depend on $\boldsymbol{x_i}$ \Wang and Leblanc (2008). It is clear that SLSE is a natural extension of the OLSE which is defined based on the first-order difference function (i.e. $`y_i-\mathbb{E}[y_i]=y_i-\eta(\boldsymbol{x_i};\boldsymbol{\theta})`$). On the other hand, SLSE is defined using not only the first-order difference function, but also second-order difference function (i.e. $`y_i^2-\mathbb{E}[y_i^2]=y_i^2-(\eta^2(\boldsymbol{x_i};\boldsymbol{\theta})+\sigma^2))`$. One might think about the downsides of the SLSE after talking about the advantages of SLSE over OLSE. SLSE does have its disadvantages indeed. It is not a linear estimator and there is no closed-form solution. It requires more computational resources compared to the OLSE due to the nonlinearity. However, numerical results can be easily computed for SLSE nowadays. As a result, SLSE is a powerful alternative estimator to be considered in research studies and real-life applications.
 
 ```
 [opt_val, opt_design, error] = opt_SLSE("D", 101, 0, [0.05, 0.5]', [0,180]',@peleg)

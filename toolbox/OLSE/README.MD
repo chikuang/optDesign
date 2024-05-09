@@ -1,0 +1,1 @@
+# Compute optimal regression design under ordinary least-squares estimator

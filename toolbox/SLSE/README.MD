@@ -1,0 +1,1 @@
+# Compute optimal regression design under second-order least-squares estimator

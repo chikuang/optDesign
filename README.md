@@ -6,6 +6,13 @@
 
 [![Generic badge](https://img.shields.io/badge/MATLAB-R2023b-BLUE.svg)](https://shields.io/)
 
+[**Home**](https://optDesign.readthedocs.io/)
+| [**Description**](#description)
+| [**Status**](#status)
+| [**Example**](#example)
+| [**TODO**](#todo)
+| [**Reference**](#reference)
+
 ---
 
 ## Description

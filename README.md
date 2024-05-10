@@ -112,11 +112,19 @@ error =
 
 ## TODO
 
++ [x] Second-order least squares estimator with A-, D- and c-criteria
++ [x] Optimal approximate design for various regression models, including the following:
+  1. Michaelis-Menton
+  2. Gompertz
+  3. EMax
+  4. Compartment
+  5. Peleg
+  6. Arrhenius equation
+  7. Second-order regression
 + [ ] Various optimalities including A-, D-, c-, K- and E-.
-+ [ ] Optimal approximate design for various regression models
-+ [ ] Optimal exact design
-+ [ ] Second-order least squares estimator
-+ [ ] CVXSADes paper
++ [ ] Implementation of the equivalence theorem under ordinary least-squares estimator
++ [ ] Optimal exact design -- CVXSADes paper
+
 
 ## Reference
 
